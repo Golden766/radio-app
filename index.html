@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radio Browser - Votre Radio en Ligne</title>
+  <meta name="theme-color" content="#2c3e50">
+  <meta name="description" content="Écoutez vos stations de radio en ligne préférées.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/radio.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/radio.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Avertissement si ouvert en file:// -->
+    <div id="fileWarning" class="file-warning hidden">
+      ⚠️ <strong>Attention :</strong> Vous ouvrez ce fichier directement (<code>file://</code>). 
+      Les requêtes CORS vers l'API Radio Browser peuvent être bloquées par le navigateur.
+      Pour un fonctionnement correct, servez ce dossier avec un serveur local : 
+      <code>python -m http.server 8000</code> puis ouvrez <code>http://localhost:8000</code>.
+      <button id="dismissWarning">✕</button>
+    </div>
+    
+    <h1>📻 Radio Browser</h1>
+    <p>Écoutez vos radios en ligne préférées - Recherche, favoris et lecture directe</p>
+    <div id="appStatus" class="app-status hidden" role="status" aria-live="polite"></div>
+    
+    <!-- Recherche -->
+    <div class="search-section">
+      <h2>Rechercher une station</h2>
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Nom de la station (min. 2 caractères pour suggestions)..." autocomplete="off">
+        <button id="searchBtn">🔍 Rechercher</button>
+        <button id="clearSearchBtn" style="display:none;">Réinitialiser</button>
+      </div>
+      <!-- Suggestions de recherche -->
+      <div id="searchSuggestions" class="search-suggestions"></div>
+      
+      <h3>Par pays</h3>
+      <div class="search-box">
+        <input type="text" id="countryInput" placeholder="Code pays (ex: FR, US, DE)...">
+        <button id="byCountryBtn">🌍 Par pays</button>
+      </div>
+      
+      <button id="loadTopBtn" style="margin-top:10px;">Top 50 des stations populaires</button>
+    </div>
+    
+    <!-- Liste des stations -->
+    <h2>Stations disponibles</h2>
+    <div id="stationsList">
+      <p class="empty-msg">Chargement des stations populaires...</p>
+    </div>
+    
+    <!-- Lecteur audio -->
+    <div class="player">
+      <h2>Lecteur audio</h2>
+      <audio id="audioPlayer" controls playsinline class="audio-player">
+        Votre navigateur ne supporte pas l'élément audio.
+      </audio>
+      <div id="nowPlaying" style="margin-top:10px; font-style:italic; color:#666;">Prêt à jouer...</div>
+    </div>
+    
+    <!-- Favoris -->
+    <div class="favorites">
+      <h2>Mes favoris</h2>
+      <div id="favoritesList">
+        <p class="empty-msg">Aucun favori pour le moment.</p>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
